@@ -706,7 +706,8 @@ mod tests {
             let _ : ::capnp::primitive_list::Builder<()> =
                 root.get_any_pointer_field().init_as_sized((1 << 29) - 1);
         }
-        let segments = message.get_segments_for_output();
+        let mut collector = ::capnp::OutputCollector::new();
+        let segments = message.get_segments_for_output(&mut collector);
         assert_eq!(segments.len(), 1);
         assert_eq!(segments[0].len(), 2);
 
@@ -731,7 +732,8 @@ mod tests {
             let _ : ::capnp::struct_list::Builder<test_empty_struct::Builder> =
                 root.get_any_pointer_field().init_as_sized((1 << 29) - 1);
         }
-        let segments = message.get_segments_for_output();
+        let mut collector = ::capnp::OutputCollector::new();
+        let segments = message.get_segments_for_output(&mut collector);
         assert_eq!(segments.len(), 1);
         assert_eq!(segments[0].len(), 3);
 
